@@ -1,21 +1,23 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router'
-import React, { Component } from 'react'
-import { Text, View } from 'react-native'
-import { useSelector } from 'react-redux';
-import { RootState } from './redux/reducers';
+import { Stack } from "expo-router";
+import React, { Component } from "react";
+import { Text, View } from "react-native";
+import { useSelector } from "react-redux";
+import { RootState } from "./redux/reducers";
+import {
+  PaperProvider,
+  MD3LightTheme as DefaultTheme,
+  MD3DarkTheme as DarkTheme,
+} from "react-native-paper";
 
-export default function App(){
-    const theme = useSelector((state: RootState) => state.theme);
+export default function App() {
+  const themeMode = useSelector((state: RootState) => state.theme);
 
-    return (
-        <ThemeProvider value={theme === "dark" ? DarkTheme : DefaultTheme}>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-      </ThemeProvider>
-    )
-
+  return (
+    <PaperProvider theme={themeMode === "dark" ? DarkTheme : DefaultTheme}>
+      <Stack>
+        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+        <Stack.Screen name="+not-found" />
+      </Stack>
+    </PaperProvider>
+  );
 }
-

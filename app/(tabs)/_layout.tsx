@@ -8,18 +8,21 @@ import { Ionicons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
+import { useTheme } from "react-native-paper";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const theme = useTheme();
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        // tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
+        tabBarActiveTintColor:theme.colors.onSurface,
         headerShown: false,
         tabBarStyle: {
           paddingVertical: -40, 
           height:65,
-          // backgroundColor:"red"
+          backgroundColor:theme.colors.surfaceVariant
         },
       }}
     >
