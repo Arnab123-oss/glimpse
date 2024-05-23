@@ -7,7 +7,25 @@ import {
   Dimensions,
   FlatList,
 } from "react-native";
-// import Video from "react-native-video";
+import VideoSample from "./Video";
+
+
+// if I have to use this in index.tsx then use this 
+    {/* 
+      <View style={styles.card}>
+        <ScrollView showsVerticalScrollIndicator={false}>
+          {posts?.map((item, index) => (
+            <SingleCard
+              key={index}
+              username={item.username}
+              avatar={item.avatar}
+              media={item.media}
+              description={item.description}
+            />
+          ))}
+        </ScrollView>
+      </View> */}
+
 
 interface MediaItem {
   type: string;
@@ -20,7 +38,7 @@ interface CardProps {
   description: string;
 }
 
-const Card: React.FC<CardProps> = ({
+const SingleCard: React.FC<CardProps> = ({
   username,
   avatar,
   media,
@@ -30,7 +48,7 @@ const Card: React.FC<CardProps> = ({
     return item.type === "image" ? (
       <Image source={{ uri: item.url }} style={styles.media} />
     ) : (
-        <Image source={{ uri: item.url }} style={styles.media} />
+      <VideoSample videoUrl={item.url}/>
     );
   };
 
@@ -87,14 +105,14 @@ const styles = StyleSheet.create({
   },
   media: {
     width: Dimensions.get("window").width,
-    height: Dimensions.get("window").width,
+    height:500
   },
   footer: {
     padding: 10,
   },
   description: {
-    marginTop: 5,
+    marginTop: 3,
   },
 });
 
-export default Card;
+export default SingleCard;

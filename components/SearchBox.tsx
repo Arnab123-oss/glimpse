@@ -27,7 +27,7 @@ const SearchBox: React.FC<SearchBoxProps> = ({ onSearch }) => {
       borderRadius: 25,
       paddingHorizontal: 15,
       // marginHorizontal: 10,
-      // marginTop: 10,
+      marginBottom: 10,
       backgroundColor:theme.colors.surfaceVariant
     },
     input: {

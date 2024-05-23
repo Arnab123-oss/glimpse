@@ -12,8 +12,54 @@ import {
 import { ThemedView } from "@/components/ThemedView";
 import SearchBox from "@/components/SearchBox";
 import { useTheme } from "react-native-paper";
-import Card from "@/components/Card";
-import VideoSample from "@/components/Video";
+import SingleCard from "@/components/SingleCard";
+import { ScreenContainer } from "react-native-screens";
+
+import UserCard from "@/components/UserCrad";
+
+const data = [
+  {
+    id: "1",
+    name: "Maya",
+    age: 29,
+    imageUrl:
+      "https://images.unsplash.com/photo-1550155888-430386a434b4?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzZ8fHJvbWFuY2V8ZW58MHx8MHx8fDA%3D",
+  },
+  {
+    id: "2",
+    name: "Nancy",
+    age: 25,
+    imageUrl:
+    "https://images.unsplash.com/photo-1716321952175-11aecece3462?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwzfHx8ZW58MHx8fHx8",
+  },
+  {
+    id: "3",
+    name: "Stacey",
+    age: 22,
+    imageUrl:
+      "https://images.unsplash.com/photo-1550155891-1ab2d265d9c3?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTR8fHJvbWFuY2V8ZW58MHx8MHx8fDA%3D",
+  },
+  {
+    id: "4",
+    name: "Kat",
+    age: 22,
+    imageUrl:
+      "https://images.unsplash.com/photo-1480618376353-2950ee462b17?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjJ8fHJvbWFuY2V8ZW58MHx8MHx8fDA%3D",
+  },  {
+    id: "4",
+    name: "Kat",
+    age: 22,
+    imageUrl:
+      "https://images.unsplash.com/photo-1519307212971-dd9561667ffb?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MjR8fHJvbWFuY2V8ZW58MHx8MHx8fDA%3D",
+  },
+  {
+    id: "4",
+    name: "Kat",
+    age: 22,
+    imageUrl:
+      "https://images.unsplash.com/photo-1592398276785-f636168c02e0?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MzR8fHJvbWFuY2V8ZW58MHx8MHx8fDA%3D",
+  },
+];
 
 const posts = [
   {
@@ -27,15 +73,15 @@ const posts = [
         url: "https://images.unsplash.com/photo-1526779259212-939e64788e3c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D",
       },
       {
-        type: "image",
-        url: "https://images.unsplash.com/photo-1526779259212-939e64788e3c?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Nnx8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D",
+        type: "video",
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       },
     ],
     description: "Beautiful scenery!",
   },
   {
     id: "2",
-    username: "jane_doe",
+    username: "jane_do",
     avatar:
       "https://images.unsplash.com/photo-1505968409348-bd000797c92e?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZnJlZSUyMGltYWdlc3xlbnwwfHwwfHx8MA%3D%3D",
     media: [
@@ -45,7 +91,7 @@ const posts = [
       },
       {
         type: "video",
-        url: "https://www.pexels.com/video/a-book-and-a-flower-on-a-picnic-blanket-6800638/",
+        url: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
       },
     ],
     description: "Check out this cool video!",
@@ -61,47 +107,40 @@ export default function HomeScreen() {
 
   const styles = StyleSheet.create({
     container: {
-      marginHorizontal: 8,
+      // marginHorizontal: 8,
       marginTop: 60,
-      // marginBottom: 10,
     },
     home: {
       flex: 1,
       backgroundColor: theme.colors.background,
     },
     card: {
-      // flex: 1,
-      // padding: 10,
-      width: Dimensions.get("window").width,
-      height: Dimensions.get("window").width,
+      flex: 1,
     },
-    
+    list: {
+      justifyContent: "center",
+      alignItems: "center",
+    },
   });
+
+  const renderItem = ({ item }: { item: (typeof data)[0] }) => (
+    <UserCard name={item.name} age={item.age} imageUrl={item.imageUrl} />
+  );
 
   return (
     <View style={styles.home}>
       <View style={styles.container}>
         <SearchBox onSearch={handleSearch} />
       </View>
-       <VideoSample />
+  
 
-
-
-{/*       
-      <View style={styles.card}>
-        
-        <ScrollView showsVerticalScrollIndicator={false}>
-          {posts?.map((item, index) => (
-            <Card
-              key={index}
-              username={item.username}
-              avatar={item.avatar}
-              media={item.media}
-              description={item.description}
-            />
-          ))}
-        </ScrollView>
-      </View> */}
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.id}
+        numColumns={2}
+        contentContainerStyle={styles.list}
+      />
     </View>
   );
 }
