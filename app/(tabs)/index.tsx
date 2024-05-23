@@ -12,7 +12,6 @@ import {
 import { ThemedView } from "@/components/ThemedView";
 import SearchBox from "@/components/SearchBox";
 import { useTheme } from "react-native-paper";
-import SingleCard from "@/components/SingleCard";
 import { ScreenContainer } from "react-native-screens";
 
 import UserCard from "@/components/UserCrad";
