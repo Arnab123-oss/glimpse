@@ -10,6 +10,7 @@ import {
 } from "react-native";
 import { FontAwesome } from "@expo/vector-icons";
 import { useTheme } from "react-native-paper";
+import { useNavigation, useRouter } from "expo-router";
 
 interface CardProps {
   name: string;
@@ -57,58 +58,48 @@ const Card: React.FC<CardProps> = ({ name, age, imageUrl }) => {
     likeIcon: {
       padding: 5,
     },
-  });
-  const[isLike,SetIsLike] = useState<boolean| null>(false)
-  const handlePress = (name: string) => {
-    Alert.alert("Single Tap", `You tapped on ${name}`);
-  };
-
-  const handleDoubleTap = (name: string) => {
-    SetIsLike(true);
-  };
-  const lastTap = useRef<number | null>(null);
-  const singleTapTimeout = useRef<NodeJS.Timeout | null>(null);
-  const handleTap = () => {
-    const now = Date.now();
-
-    if (lastTap.current && now - lastTap.current < 300) {
-      // Detected double tap
-      if (singleTapTimeout.current) {
-        clearTimeout(singleTapTimeout.current);
-      }
-      handleDoubleTap("D");
-    } else {
-      // Detected single tap
-      lastTap.current = now;
-      singleTapTimeout.current = setTimeout(() => {
-        handlePress("S");
-      }, 300); // Delay to differentiate single tap from double tap
+    viewCount: {
+      display:"flex",
+      flexDirection:"row",
+      justifyContent:"center",
+      alignItems:"center"
+     
     }
+  });
+  const story = {
+    username: "user1",
+    avatar: "https://example.com/avatar1.jpg",
+    media: [
+      { type: "image", url: "https://example.com/image1.jpg" },
+      { type: "video", url: "https://example.com/video1.mp4" },
+    ],
+  }
+
+  const router = useRouter();
+  const navigate = useNavigation();
+
+  const handlePress = () => {
+    router.push(`/story`);
   };
 
   return (
-    <TouchableOpacity onPress={handleTap} activeOpacity={0.7}>
+    <TouchableOpacity onPress={handlePress} activeOpacity={0.7}>
       <View style={styles.card}>
         <Image source={{ uri: imageUrl }} style={styles.image} />
         <View style={styles.infoContainer}>
           <Text style={styles.name}>
-            {name},{age}
+            {name}
           </Text>
-          {isLike ? (
-            <FontAwesome
-              name="heart"
-              size={20}
-              color="red"
-              style={styles.likeIcon}
-            />
-          ) : (
-            <FontAwesome
-              name="heart"
-              size={20}
+          <View style={styles.viewCount}>
+          <FontAwesome
+              name="eye"
+              size={15}
               color="white"
               style={styles.likeIcon}
             />
-          )}
+           <Text style={{color:"white",fontWeight:"bold"}}>4.5K</Text>
+          </View>
+          
         </View>
       </View>
     </TouchableOpacity>
