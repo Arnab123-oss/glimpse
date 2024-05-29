@@ -79,7 +79,10 @@ const Card: React.FC<CardProps> = ({ name, age, imageUrl }) => {
   const navigate = useNavigation();
 
   const handlePress = () => {
-    router.push(`/story`);
+    router.push({
+      pathname: '/story',
+      params: { name: 'ankit' },
+    });
   };
 
   return (

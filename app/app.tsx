@@ -16,7 +16,7 @@ export default function App() {
     <PaperProvider theme={themeMode === "dark" ? DarkTheme : DefaultTheme}>
       <Stack>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="story/:storyId" options={{ headerShown: false }} />
+        <Stack.Screen name="story" options={{ headerShown: false }} />
         <Stack.Screen name="+not-found" />
       </Stack>
     </PaperProvider>
