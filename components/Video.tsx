@@ -2,6 +2,8 @@ import React, { useRef, useState } from 'react';
 import { Dimensions, StyleSheet, View } from 'react-native';
 import { AVPlaybackStatus, Video } from 'expo-av';
 
+const { width, height } = Dimensions.get('window');
+
 type VideoSampleProps = {
   videoUrl: string;
 };
@@ -36,6 +38,7 @@ type VideoSampleProps = {
         source={{ uri: videoUrl }}
         onLoad={handleLoad}
         onPlaybackStatusUpdate={status => setStatus(status)}
+        resizeMode="contain"
       />
       <View style={styles.controlsContainer}>
         {/* Add your controls here if needed */}
@@ -54,8 +57,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 50,
   },
   video: {
-    width: Dimensions.get("window").width,
-    height:500
+    width: width,
+    height: (width * 9) / 16
    
   },
   controlsContainer: {
