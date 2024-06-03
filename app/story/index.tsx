@@ -24,7 +24,7 @@ const { width, height } = Dimensions.get('window');
 const dummyData: { [key: string]: Story[] } = {
   '1': [
     { id: '1', type: 'image', url: 'https://plus.unsplash.com/premium_photo-1683910767532-3a25b821f7ae?q=80&w=1408&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
-    { id: '2', type: 'video', url: 'https://videos.pexels.com/video-files/7565438/7565438-hd_1080_1920_25fps.mp4' },
+    { id: '2', type: 'video', url: 'https://videos.pexels.com/video-files/3576377/3576377-hd_1280_720_25fps.mp4' },
     { id: '3', type: 'image', url: 'https://plus.unsplash.com/premium_photo-1661889099855-b44dc39e88c9?q=80&w=1470&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D' },
   ],
   '2': [
@@ -40,7 +40,7 @@ const Storyline: React.FC = () => {
   const [stories, setStories] = useState<Story[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [progress, setProgress] = useState(0);
-  const videoRef = useRef<Video>(null);
+  const [videoDuration, setVideoDuration] = useState<number | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -56,7 +56,7 @@ const Storyline: React.FC = () => {
     setProgress(0);
 
     if (currentStory.type === 'image') {
-      timeout = setTimeout(nextStory, 10000); // 10 seconds for images
+      timeout = setTimeout(nextStory, 5000); // 10 seconds for images
       // Simulate progress for images
       let progressInterval = setInterval(() => {
         setProgress(prev => {
@@ -66,10 +66,11 @@ const Storyline: React.FC = () => {
           }
           return newProgress;
         });
-      }, 100);
+      }, 50);
     } else if (currentStory.type === 'video') {
       // Simulate progress for videos
-      timeout = setTimeout(nextStory, 10000); // Max 10 seconds for videos
+      const videoTimeoutDuration = videoDuration || 10000;
+      timeout = setTimeout(nextStory, videoTimeoutDuration); // Max 10 seconds for videos
       let progressInterval = setInterval(() => {
         setProgress(prev => {
           const newProgress = prev + 0.01;
@@ -106,11 +107,17 @@ const Storyline: React.FC = () => {
     router.back();
   };
 
+  const handleVideoLoad = (status: AVPlaybackStatus) => {
+    if (status.isLoaded) {
+      setVideoDuration(status.durationMillis);
+    }
+  };
+
   const renderStoryContent = (story: Story) => {
     if (story.type === 'image') {
       return <Image source={{ uri: story.url }} style={styles.image} />;
     } else if (story.type === 'video') {
-      return <VideoSample videoUrl={story.url} />;
+      return <VideoSample videoUrl={story.url}  onLoad={handleVideoLoad}/>;
     }
     return null;
   };

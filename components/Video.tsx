@@ -6,26 +6,28 @@ const { width, height } = Dimensions.get('window');
 
 type VideoSampleProps = {
   videoUrl: string;
+  onLoad: (status: AVPlaybackStatus) => void;
 };
- const VideoSample: React.FC<VideoSampleProps> = ({ videoUrl }) => {
+
+const VideoSample: React.FC<VideoSampleProps> = ({ videoUrl, onLoad }) => {
   const videoRef = useRef<Video>(null);
   const [status, setStatus] = useState<AVPlaybackStatus | null>(null);
 
-  const handleLoad = () => {
+  const handleLoad = (status: AVPlaybackStatus) => {
     if (videoRef.current) {
       videoRef.current.playAsync();
     }
+    onLoad(status);
   };
 
   const handleClick = () => {
-    if (status && status.isLoaded) { // Ensure the status is loaded
+    if (status && status.isLoaded) {
       if (status.isPlaying) {
         videoRef.current?.pauseAsync();
       } else {
         videoRef.current?.playAsync();
       }
     } else {
-      // Handle cases where video is not yet loaded (e.g., display a loading indicator)
       console.log('Video is not yet loaded');
     }
   };
@@ -36,8 +38,8 @@ type VideoSampleProps = {
         ref={videoRef}
         style={styles.video}
         source={{ uri: videoUrl }}
-        onLoad={handleLoad}
-        onPlaybackStatusUpdate={status => setStatus(status)}
+        onLoad={(status) => handleLoad(status)}
+        onPlaybackStatusUpdate={(status) => setStatus(status)}
         resizeMode="contain"
       />
       <View style={styles.controlsContainer}>
@@ -47,24 +49,19 @@ type VideoSampleProps = {
   );
 };
 
-
 const styles = StyleSheet.create({
   contentContainer: {
     flex: 1,
-    padding: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 50,
   },
   video: {
     width: width,
-    height: (width * 9) / 16
-   
+    height: height,
   },
   controlsContainer: {
-    padding: 10,
+    // Add styling if needed
   },
 });
-
 
 export default VideoSample;
