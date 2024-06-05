@@ -66,14 +66,6 @@ const Card: React.FC<CardProps> = ({ name, age, imageUrl }) => {
      
     }
   });
-  const story = {
-    username: "user1",
-    avatar: "https://example.com/avatar1.jpg",
-    media: [
-      { type: "image", url: "https://example.com/image1.jpg" },
-      { type: "video", url: "https://example.com/video1.mp4" },
-    ],
-  }
 
   const router = useRouter();
   const navigate = useNavigation();

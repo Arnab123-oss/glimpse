@@ -7,10 +7,12 @@ const { width, height } = Dimensions.get('window');
 type VideoSampleProps = {
   videoUrl: string;
   onLoad: (status: AVPlaybackStatus) => void;
+  videoRef: React.RefObject<Video>;
 };
 
-const VideoSample: React.FC<VideoSampleProps> = ({ videoUrl, onLoad }) => {
-  const videoRef = useRef<Video>(null);
+const VideoSample: React.FC<VideoSampleProps> = ({ videoUrl, onLoad , videoRef }) => {
+  // const videoRef = useRef<Video>(null);
+  
   const [status, setStatus] = useState<AVPlaybackStatus | null>(null);
 
   const handleLoad = (status: AVPlaybackStatus) => {
@@ -20,20 +22,8 @@ const VideoSample: React.FC<VideoSampleProps> = ({ videoUrl, onLoad }) => {
     onLoad(status);
   };
 
-  const handleClick = () => {
-    if (status && status.isLoaded) {
-      if (status.isPlaying) {
-        videoRef.current?.pauseAsync();
-      } else {
-        videoRef.current?.playAsync();
-      }
-    } else {
-      console.log('Video is not yet loaded');
-    }
-  };
-
   return (
-    <View style={styles.contentContainer} onTouchStart={handleClick}>
+    <View style={styles.contentContainer}>
       <Video
         ref={videoRef}
         style={styles.video}
@@ -42,6 +32,7 @@ const VideoSample: React.FC<VideoSampleProps> = ({ videoUrl, onLoad }) => {
         onPlaybackStatusUpdate={(status) => setStatus(status)}
         resizeMode="contain"
       />
+
       <View style={styles.controlsContainer}>
         {/* Add your controls here if needed */}
       </View>
